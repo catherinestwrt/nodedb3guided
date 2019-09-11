@@ -81,7 +81,7 @@ router.get('/:id/posts', (req, res) => {
   const { id } = req.params;
 
   db('posts')
-    .join('users as u', 'u.id', '=', 'p.user_id')
+    .join('users as u', 'u.id', '=', 'posts.user_id')
     .where({ user_id: id })
     .then(posts => {
       res.status(200).json(posts);
