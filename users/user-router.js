@@ -80,9 +80,10 @@ router.delete('/:id', (req, res) => {
 router.get('/:id/posts', (req, res) => {
   const { id } = req.params;
 
-  db('posts')
-    .join('users as u', 'u.id', '=', 'posts.user_id')
+  db('users as u')
+    .join('posts as p', 'u.id', '=', 'p.user_id')
     .where({ user_id: id })
+    .select('p.id', 'p.contents', 'u.username')
     .then(posts => {
       res.status(200).json(posts);
     })
